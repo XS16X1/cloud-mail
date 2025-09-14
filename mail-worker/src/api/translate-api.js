@@ -3,7 +3,7 @@ import {translate} from "@/service/translate-service.js";
 
 const app = hon.post('/translate', async (c) => {
     const { text } = await c.req.json();
-    const translatedText = await translate(text, c.env);
+    const translatedText = await translate(text, c);
     return c.json(translatedText);
 });
 

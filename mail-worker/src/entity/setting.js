@@ -23,5 +23,8 @@ export const setting = sqliteTable('setting', {
 	ruleType: integer('rule_type').default(0).notNull(),
 	loginOpacity: integer('login_opacity').default(0.88),
 	resendTokens: text('resend_tokens').default("{}").notNull(),
+	aiKey: text('ai_key'),
+	aiHost: text('ai_host'),
+	aiModel: text('ai_model'),
 });
 export default setting
