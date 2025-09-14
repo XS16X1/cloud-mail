@@ -1,7 +1,7 @@
-import {getSettings} from "./setting-service.js";
+import settingService from "./setting-service.js";
 
 export async function translate(text, c) {
-    const settings = await getSettings(c);
+    const settings = await settingService.query(c);
     const { aiKey, aiHost, aiModel } = settings;
 
     if (!aiKey || !aiHost || !aiModel) {
