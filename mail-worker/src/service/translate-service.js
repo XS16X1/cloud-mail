@@ -1,4 +1,4 @@
-import {getSettings} from "@/service/setting-service.js";
+import {getSettings} from "./setting-service.js";
 
 export async function translate(text, c) {
     const settings = await getSettings(c);
