@@ -256,5 +256,9 @@ const zh = {
     localUpload: '本地上传',
     imageLink: '图片链接',
     backgroundWarning: '图片文件大小会影响网站加载速度',
+    ai_setting: 'AI 设置',
+    ai_key: 'AI 密钥',
+    ai_host: 'AI 地址',
+    ai_model: 'AI 模型',
 }
 export default zh

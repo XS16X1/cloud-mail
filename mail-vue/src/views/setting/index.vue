@@ -45,6 +45,30 @@
         </el-select>
       </div>
     </div>
+    <div class="container">
+      <div class="title">{{$t('ai_setting')}}</div>
+      <div class="item">
+        <div>{{$t('ai_key')}}</div>
+        <div>
+          <el-input v-model="settings.aiKey" />
+        </div>
+      </div>
+      <div class="item">
+        <div>{{$t('ai_host')}}</div>
+        <div>
+          <el-input v-model="settings.aiHost" />
+        </div>
+      </div>
+      <div class="item">
+        <div>{{$t('ai_model')}}</div>
+        <div>
+          <el-input v-model="settings.aiModel" />
+        </div>
+      </div>
+      <div>
+        <el-button type="primary" @click="saveSettings">{{$t('save')}}</el-button>
+      </div>
+    </div>
     <div class="del-email" v-perm="'my:delete'">
       <div class="title">{{$t('deleteUser')}}</div>
       <div style="color: #585d69;">
@@ -73,9 +97,11 @@ import {accountSetName} from "@/request/account.js";
 import {useAccountStore} from "@/store/account.js";
 import {useI18n} from "vue-i18n";
 import {useSettingStore} from "@/store/setting.js";
+import {settingSave} from "@/request/setting.js";
 
 const { t } = useI18n()
 const settingStore = useSettingStore()
+const { settings } = storeToRefs(settingStore)
 const accountStore = useAccountStore()
 const userStore = useUserStore();
 const setPwdLoading = ref(false)
@@ -201,6 +227,15 @@ function submitPwd() {
 
 }
 
+function saveSettings() {
+  settingSave(settings.value).then(() => {
+    ElMessage({
+      message: t('saveSuccessMsg'),
+      type: 'success',
+      plain: true,
+    })
+  })
+}
 </script>
 <style scoped lang="scss">
 .box {

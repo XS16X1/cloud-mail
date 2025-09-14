@@ -255,7 +255,11 @@ const en = {
     backgroundUrlDesc: 'Image URL',
     localUpload: ' Local upload',
     imageLink: 'Image URL',
-    backgroundWarning: 'Image file size affects website load speed.'
+    backgroundWarning: 'Image file size affects website load speed.',
+    ai_setting: 'AI Setting',
+    ai_key: 'AI Key',
+    ai_host: 'AI Host',
+    ai_model: 'AI Model',
 }
 
 export default en
