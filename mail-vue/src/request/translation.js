@@ -1,4 +1,4 @@
-import request from './index';
+import request from '../axios/index';
 
 export function translate(data) {
     return request({
