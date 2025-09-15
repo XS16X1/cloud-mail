@@ -18,8 +18,25 @@ const init = {
 		await this.v1_3_1DB(c);
 		await this.v1_4DB(c);
 		await this.v1_5DB(c);
+		await this.v1_6DB(c);
 		await settingService.refresh(c);
 		return c.text(t('initSuccess'));
+	},
+
+	async v1_6DB(c) {
+		const ADD_COLUMN_SQL_LIST = [
+			`ALTER TABLE setting ADD COLUMN translation_model_name TEXT;`,
+			`ALTER TABLE setting ADD COLUMN translation_api_key TEXT;`,
+			`ALTER TABLE setting ADD COLUMN translation_api_url TEXT;`
+		];
+
+		for (let sql of ADD_COLUMN_SQL_LIST) {
+			try {
+				await c.env.db.prepare(sql).run();
+			} catch (e) {
+				console.warn(`跳过字段添加，原因：${e.message}`);
+			}
+		}
 	},
 
 	async v1_5DB(c) {
