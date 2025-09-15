@@ -8,7 +8,7 @@
         <Icon class="icon" @click="changeStar" v-else icon="solar:star-line-duotone" width="19" height="19"/>
       </span>
       <Icon class="icon" v-if="emailStore.contentData.showReply" v-perm="'email:send'"  @click="openReply" icon="carbon:reply" width="20" height="20" />
-      <Icon class="icon" v-if="settingStore.settings.translationModelName" icon="grommet-icons:translate" width="20" height="20" @click="handleTranslate" />
+      <Icon class="icon" icon="grommet-icons:translate" width="20" height="20" @click="handleTranslate" />
     </div>
     <div></div>
     <el-scrollbar class="scrollbar">

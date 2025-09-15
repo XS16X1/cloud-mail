@@ -45,9 +45,10 @@
                     width="22" height="22"/>
             </div>
           </div>
-          <div>
+          <div style="display: flex; align-items: center; gap: 10px;">
             <el-button type="primary" @click="sendEmail" v-if="form.sendType === 'reply'">{{$t('reply')}}</el-button>
             <el-button type="primary" @click="sendEmail" v-else >{{$t('send')}}</el-button>
+            <Icon class="icon" icon="grommet-icons:translate" width="20" height="20" @click="handleTranslate" />
           </div>
         </div>
       </div>
@@ -72,6 +73,7 @@ import {userDraftStore} from "@/store/draft.js";
 import db from "@/db/db.js";
 import dayjs from "dayjs";
 import {useI18n} from "vue-i18n";
+import {translate} from "@/request/translation.js";
 
 defineExpose({
   open,
@@ -272,6 +274,19 @@ async function sendEmail() {
   })
 }
 
+const handleTranslate = () => {
+  const textToTranslate = form.text || (new DOMParser().parseFromString(form.content, 'text/html')).body.textContent;
+  translate({text: textToTranslate}).then(res => {
+    editor.value.setContent(res);
+  }).catch(err => {
+    console.error(err);
+    ElMessage({
+      message: t('translationApiError'),
+      type: 'error',
+      plain: true,
+    });
+  });
+};
 
 function resetForm() {
   form.receiveEmail = []
