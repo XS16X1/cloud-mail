@@ -901,7 +901,7 @@ function saveTranslationSetting() {
   settingForm.translationModelName = translationForm.modelName
   settingForm.translationApiKey = translationForm.apiKey
   settingForm.translationApiUrl = translationForm.apiUrl
-  editSetting(settingForm)
+  editSetting(settingForm, true)
 }
 
 function editSetting(settingForm, refreshStatus = true) {
