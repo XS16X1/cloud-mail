@@ -277,6 +277,9 @@ const handleTranslate = () => {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     .translate-icon {
       font-size: 24px;
       color: #409EFF;
