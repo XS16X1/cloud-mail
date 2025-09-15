@@ -19,7 +19,7 @@ const translationService = {
             },
             body: JSON.stringify({
                 model: translationModelName,
-                messages: [{ role: 'user', content: `Translate the following text to Chinese: ${text}` }],
+                messages: [{ role: 'user', content: `Translate the following text to the same language as the surrounding text: ${text}` }],
             }),
         });
 
