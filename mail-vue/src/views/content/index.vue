@@ -8,13 +8,15 @@
         <Icon class="icon" @click="changeStar" v-else icon="solar:star-line-duotone" width="19" height="19"/>
       </span>
       <Icon class="icon" v-if="emailStore.contentData.showReply" v-perm="'email:send'"  @click="openReply" icon="carbon:reply" width="20" height="20" />
-      <Icon class="icon" icon="grommet-icons:translate" width="20" height="20" @click="handleTranslate" />
     </div>
     <div></div>
     <el-scrollbar class="scrollbar">
       <div class="container">
         <div class="email-title">
           {{ email.subject }}
+          <el-tooltip :content="$t('translate')" placement="top">
+            <Icon class="icon translate-icon" icon="grommet-icons:translate" width="20" height="20" @click="handleTranslate" />
+          </el-tooltip>
         </div>
         <div class="content">
           <div class="email-info">
@@ -35,8 +37,20 @@
             <el-alert v-if="email.status === 5" :closable="false" :title="$t('delayed')" class="email-msg" type="warning" show-icon />
           </div>
           <el-scrollbar class="htm-scrollbar" :class="email.attList.length === 0 ? 'bottom-distance' : ''">
-            <ShadowHtml :html="formatImage(email.content)" v-if="email.content" />
-            <pre v-else class="email-text" >{{email.text}}</pre>
+            <div v-if="translating" class="loading-container">
+              <el-icon class="is-loading" size="24"><Loading /></el-icon>
+            </div>
+            <div v-if="translatedText">
+              <el-divider>{{$t('originalText')}}</el-divider>
+              <ShadowHtml :html="formatImage(email.content)" v-if="email.content" />
+              <pre v-else class="email-text" >{{email.text}}</pre>
+              <el-divider>{{$t('translatedText')}}</el-divider>
+              <ShadowHtml :html="formatImage(translatedText)" />
+            </div>
+            <div v-else>
+              <ShadowHtml :html="formatImage(email.content)" v-if="email.content" />
+              <pre v-else class="email-text" >{{email.text}}</pre>
+            </div>
           </el-scrollbar>
           <div class="att" v-if="email.attList.length > 0">
             <div class="att-title">
@@ -76,6 +90,7 @@
 <script setup>
 import ShadowHtml from '@/components/shadow-html/index.vue'
 import {reactive, ref, watch} from "vue";
+import { Loading } from '@element-plus/icons-vue'
 import {useRouter} from 'vue-router'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {emailDelete} from "@/request/email.js";
@@ -101,6 +116,8 @@ const router = useRouter()
 const email = emailStore.contentData.email
 const showPreview = ref(false)
 const srcList = reactive([])
+const translating = ref(false)
+const translatedText = ref('')
 
 const { t } = useI18n()
 watch(() => accountStore.currentAccountId, () => {
@@ -200,9 +217,11 @@ const handleDelete = () => {
 }
 
 const handleTranslate = () => {
+  translating.value = true;
+  translatedText.value = '';
   const textToTranslate = email.text || (new DOMParser().parseFromString(email.content, 'text/html')).body.textContent;
   translate({text: textToTranslate}).then(res => {
-    email.content = res;
+    translatedText.value = res;
   }).catch(err => {
     console.error(err);
     ElMessage({
@@ -210,6 +229,8 @@ const handleTranslate = () => {
       type: 'error',
       plain: true,
     });
+  }).finally(() => {
+    translating.value = false;
   });
 };
 </script>
@@ -256,6 +277,14 @@ const handleTranslate = () => {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 10px;
+    .translate-icon {
+      font-size: 24px;
+      color: #409EFF;
+      cursor: pointer;
+      &:hover {
+        color: #66b1ff;
+      }
+    }
   }
 
   .htm-scrollbar {
