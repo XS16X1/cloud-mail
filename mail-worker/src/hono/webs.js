@@ -17,5 +17,5 @@ import '../api/all-email-api'
 import '../api/init-api'
 import '../api/analysis-api'
 import '../api/reg-key-api'
-import '../api/translate-api'
+import '../api/translation-api'
 export default app;

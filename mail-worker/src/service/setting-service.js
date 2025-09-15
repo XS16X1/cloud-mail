@@ -33,6 +33,7 @@ const settingService = {
 	async get(c) {
 		const settingRow = await this.query(c);
 		settingRow.secretKey = settingRow.secretKey ? `${settingRow.secretKey.slice(0, 12)}******` : null;
+		settingRow.translationApiKey = settingRow.translationApiKey ? `${settingRow.translationApiKey.slice(0, 12)}******` : null;
 		Object.keys(settingRow.resendTokens).forEach(key => {
 			settingRow.resendTokens[key] = `${settingRow.resendTokens[key].slice(0, 12)}******`;
 		});

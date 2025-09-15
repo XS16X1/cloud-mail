@@ -59,6 +59,8 @@ const zh = {
 	noDomainPermRegKey: '你的注册码没有权限注册该域名邮箱',
 	noDomainPermSend: '你没有权限使用该域名邮箱发送邮件',
 	JWTMismatch: 'jwt_secret 不匹配',
+	translationSettingNotFound: '翻译设置未找到',
+	translationApiError: '翻译API请求失败',
 	perms: {
 		"邮件": "邮件",
 		"邮件发送": "邮件发送",

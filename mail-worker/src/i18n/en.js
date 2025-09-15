@@ -59,6 +59,8 @@ const en = {
 	noDomainPermRegKey: "Registration code not valid for this domain",
 	noDomainPermSend: "No permission to send from this domain email",
 	JWTMismatch: 'JWT secret mismatch',
+	translationSettingNotFound: 'Translation settings not found',
+	translationApiError: 'Translation API request failed',
 	perms: {
 		"邮件": "Email",
 		"邮件发送": "Send email",
