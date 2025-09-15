@@ -131,6 +131,10 @@ const en = {
     regSwitch: 'Sign up',
     loginSwitch: 'Sign in',
     websiteSetting: 'Website',
+    translationSetting: 'Translation',
+    modelName: 'Model Name',
+    apiKey: 'API Key',
+    apiUrl: 'API URL',
     websiteReg: 'Sign up',
     multipleEmail: 'Multiple accounts',
     multipleEmailDesc: 'Enable this feature to allow users to add multiple accounts',
@@ -255,11 +259,7 @@ const en = {
     backgroundUrlDesc: 'Image URL',
     localUpload: ' Local upload',
     imageLink: 'Image URL',
-    backgroundWarning: 'Image file size affects website load speed.',
-    ai_setting: 'AI Setting',
-    ai_key: 'AI Key',
-    ai_host: 'AI Host',
-    ai_model: 'AI Model',
+    backgroundWarning: 'Image file size affects website load speed.'
 }
 
 export default en

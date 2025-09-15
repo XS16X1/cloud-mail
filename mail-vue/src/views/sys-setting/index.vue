@@ -262,6 +262,40 @@
             </div>
           </div>
 
+          <!-- Translation Settings Card -->
+          <div class="settings-card">
+            <div class="card-title">{{$t('translationSetting')}}</div>
+            <div class="card-content">
+              <div class="setting-item">
+                <div><span>{{$t('modelName')}}</span></div>
+                <div class="r2domain">
+                  <span>{{ setting.translationModelName || '' }}</span>
+                  <el-button class="opt-button" size="small" type="primary" @click="translationShow = true">
+                    <Icon icon="lsicon:edit-outline" width="16" height="16"/>
+                  </el-button>
+                </div>
+              </div>
+              <div class="setting-item">
+                <div><span>{{$t('apiKey')}}</span></div>
+                <div class="r2domain">
+                  <span>{{ setting.translationApiKey ? '********' : '' }}</span>
+                  <el-button class="opt-button" size="small" type="primary" @click="translationShow = true">
+                    <Icon icon="lsicon:edit-outline" width="16" height="16"/>
+                  </el-button>
+                </div>
+              </div>
+              <div class="setting-item">
+                <div><span>{{$t('apiUrl')}}</span></div>
+                <div class="r2domain">
+                  <span>{{ setting.translationApiUrl || '' }}</span>
+                  <el-button class="opt-button" size="small" type="primary" @click="translationShow = true">
+                    <Icon icon="lsicon:edit-outline" width="16" height="16"/>
+                  </el-button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="settings-card about">
             <div class="card-title">{{$t('about')}}</div>
             <div class="card-content">
@@ -333,11 +367,19 @@
           <el-button type="primary" :loading="settingLoading" @click="saveTurnstileKey">{{$t('save')}}</el-button>
         </form>
       </el-dialog>
-      <el-dialog
-          v-model="showSetBackground"
-          class="cut-dialog"
-          @closed="closedSetBackground"
-      >
+  <el-dialog v-model="translationShow" :title="$t('translationSetting')" width="340">
+    <form>
+      <el-input type="text" :placeholder="$t('modelName')" v-model="translationForm.modelName"/>
+      <el-input type="password" style="margin-top: 15px" :placeholder="$t('apiKey')" v-model="translationForm.apiKey"/>
+      <el-input type="text" style="margin-top: 15px" :placeholder="$t('apiUrl')" v-model="translationForm.apiUrl"/>
+      <el-button type="primary" :loading="settingLoading" @click="saveTranslationSetting">{{$t('save')}}</el-button>
+    </form>
+  </el-dialog>
+  <el-dialog
+      v-model="showSetBackground"
+      class="cut-dialog"
+      @closed="closedSetBackground"
+  >
         <template #header>
           <span style="font-size: 18px">
             {{$t('backgroundTitle')}}
@@ -487,6 +529,7 @@ const turnstileShow = ref(false)
 const tgSettingShow = ref(false)
 const thirdEmailShow = ref(false)
 const forwardRulesShow = ref(false)
+const translationShow = ref(false)
 const showResendList = ref(false)
 const settingStore = useSettingStore();
 const {settings: setting} = storeToRefs(settingStore);
@@ -505,6 +548,11 @@ const resendTokenForm = reactive({
 const turnstileForm = reactive({
   siteKey: '',
   secretKey: ''
+})
+const translationForm = reactive({
+  modelName: '',
+  apiKey: '',
+  apiUrl: ''
 })
 
 const regKeyOptions = [
@@ -848,6 +896,14 @@ function jump(href) {
   doc.click()
 }
 
+function saveTranslationSetting() {
+  const settingForm = {}
+  settingForm.translationModelName = translationForm.modelName
+  settingForm.translationApiKey = translationForm.apiKey
+  settingForm.translationApiUrl = translationForm.apiUrl
+  editSetting(settingForm)
+}
+
 function editSetting(settingForm, refreshStatus = true) {
   if (settingLoading.value) return
   settingLoading.value = true
@@ -872,6 +928,7 @@ function editSetting(settingForm, refreshStatus = true) {
     tgSettingShow.value = false
     thirdEmailShow.value = false
     forwardRulesShow.value = false
+    translationShow.value = false
   }).catch((e) => {
     console.error(e)
     loginOpacity.value = setting.value.loginOpacity

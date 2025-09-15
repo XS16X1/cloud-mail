@@ -8,7 +8,7 @@
         <Icon class="icon" @click="changeStar" v-else icon="solar:star-line-duotone" width="19" height="19"/>
       </span>
       <Icon class="icon" v-if="emailStore.contentData.showReply" v-perm="'email:send'"  @click="openReply" icon="carbon:reply" width="20" height="20" />
-      <Icon class="icon" @click="handleTranslate" icon="grommet-icons:language" width="20" height="20" />
+      <Icon class="icon" icon="grommet-icons:translate" width="20" height="20" @click="handleTranslate" />
     </div>
     <div></div>
     <el-scrollbar class="scrollbar">
@@ -37,9 +37,6 @@
           <el-scrollbar class="htm-scrollbar" :class="email.attList.length === 0 ? 'bottom-distance' : ''">
             <ShadowHtml :html="formatImage(email.content)" v-if="email.content" />
             <pre v-else class="email-text" >{{email.text}}</pre>
-            <div v-if="translatedContent" class="translated-content">
-              <pre class="email-text">{{ translatedContent }}</pre>
-            </div>
           </el-scrollbar>
           <div class="att" v-if="email.attList.length > 0">
             <div class="att-title">
@@ -94,7 +91,7 @@ import {useSettingStore} from "@/store/setting.js";
 import {allEmailDelete} from "@/request/all-email.js";
 import {useUiStore} from "@/store/ui.js";
 import {useI18n} from "vue-i18n";
-import {translate} from "@/request/translate.js";
+import {translate} from "@/request/translation.js";
 
 const uiStore = useUiStore();
 const settingStore = useSettingStore();
@@ -104,21 +101,8 @@ const router = useRouter()
 const email = emailStore.contentData.email
 const showPreview = ref(false)
 const srcList = reactive([])
-const translatedContent = ref('')
 
 const { t } = useI18n()
-
-async function handleTranslate() {
-  translatedContent.value = '正在翻译中...';
-  try {
-    const res = await translate(email.text || email.content);
-    translatedContent.value = res.data;
-  } catch (e) {
-    console.error(e);
-    translatedContent.value = '翻译失败。';
-  }
-}
-
 watch(() => accountStore.currentAccountId, () => {
   handleBack()
 })
@@ -214,15 +198,22 @@ const handleDelete = () => {
     router.back()
   })
 }
+
+const handleTranslate = () => {
+  const textToTranslate = email.text || (new DOMParser().parseFromString(email.content, 'text/html')).body.textContent;
+  translate({text: textToTranslate}).then(res => {
+    email.content = res;
+  }).catch(err => {
+    console.error(err);
+    ElMessage({
+      message: t('translationApiError'),
+      type: 'error',
+      plain: true,
+    });
+  });
+};
 </script>
 <style scoped lang="scss">
-.translated-content {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-}
 .box {
   height: 100%;
   overflow: hidden;
