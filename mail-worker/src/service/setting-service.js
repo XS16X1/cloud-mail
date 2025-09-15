@@ -129,7 +129,10 @@ const settingService = {
 			background: settingRow.background,
 			loginOpacity: settingRow.loginOpacity,
 			domainList:settingRow.domainList,
-			regKey: settingRow.regKey
+			regKey: settingRow.regKey,
+			translationModelName: settingRow.translationModelName,
+			translationApiKey: settingRow.translationApiKey,
+			translationApiUrl: settingRow.translationApiUrl
 		};
 	}
 };
