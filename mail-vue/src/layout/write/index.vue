@@ -49,6 +49,13 @@
             <div class="item-title">{{ $t('subject') }}</div>
           </template>
         </el-input>
+        <ai-translate
+          ref="aiTranslate"
+          :text="form.content || ''"
+          :default-target-lang="settingStore.lang === 'zh' ? 'en' : 'zh'"
+          @translate="onTranslate"
+          @translated="onTranslated"
+        />
         <tinyEditor :def-value="defValue" ref="editor" @change="change" @focus="focusChange" />
         <div class="button-item">
           <div class="att-add" @click="chooseFile">
@@ -98,6 +105,7 @@
 </template>
 <script setup>
 import tinyEditor from '@/components/tiny-editor/index.vue'
+import aiTranslate from '@/components/ai-translate/index.vue'
 import {h, nextTick, onMounted, onUnmounted, reactive, ref, toRaw, computed} from "vue";
 import {Icon} from "@iconify/vue";
 import {useUserStore} from "@/store/user.js";
@@ -130,6 +138,7 @@ const settingStore = useSettingStore()
 const emailStore = useEmailStore();
 const accountStore = useAccountStore()
 const editor = ref({})
+const aiTranslateRef = ref({})
 const userStore = useUserStore();
 const show = ref(false);
 const percent = ref(0)
@@ -429,6 +438,21 @@ function resetForm() {
 function change(content, text) {
   form.content = content;
   form.text = text
+}
+
+function onTranslate() {
+  // 翻译开始时的处理
+}
+
+function onTranslated(result) {
+  // 翻译完成后的处理
+  if (result.translatedText) {
+    form.content = result.translatedText;
+    // 更新编辑器内容
+    nextTick(() => {
+      editor.value?.getContent && editor.value.getContent();
+    });
+  }
 }
 
 function focusChange() {

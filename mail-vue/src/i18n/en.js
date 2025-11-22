@@ -307,7 +307,51 @@ const en = {
     emailText: 'Email Text',
     emailPrefix: 'Email Prefix',
     atLeast: 'At Least',
-    character: ''
+    character: '',
+    
+    // AI translation related
+    translate: 'Translate',
+    translationHistory: 'Translation History',
+    translatedResult: 'Translated Result',
+    autoTranslate: 'Auto Translate',
+    pleaseSelectLanguage: 'Please select language',
+    textCannotBeEmpty: 'Text cannot be empty',
+    translateSuccess: 'Translation successful',
+    translateFailed: 'Translation failed',
+    copySuccess: 'Copied successfully',
+    copyFailed: 'Copy failed',
+    clearSuccess: 'Cleared successfully',
+    noTranslationHistory: 'No translation history',
+    autoDetect: 'Auto Detect',
+    history: 'History',
+    select: 'Select',
+    clear: 'Clear',
+    
+    // 翻译历史页面
+    translationHistory: 'Translation History',
+    export: 'Export',
+    clearAll: 'Clear All',
+    searchHistory: 'Search translation history',
+    sourceLanguage: 'Source Language',
+    targetLanguage: 'Target Language',
+    refresh: 'Refresh',
+    totalTranslations: 'Total Translations',
+    todayTranslations: 'Today Translations',
+    languagesUsed: 'Languages Used',
+    avgResponseTime: 'Avg Response Time',
+    originalText: 'Original Text',
+    translatedText: 'Translated Text',
+    time: 'Time',
+    actions: 'Actions',
+    use: 'Use',
+    translationDetail: 'Translation Detail',
+    cancel: 'Cancel',
+    noHistoryToExport: 'No history records to export',
+    exportSuccess: 'Export successful',
+    clearAllHistoryConfirm: 'Are you sure to clear all translation history records?',
+    translationCopied: 'Translation result copied',
+    warning: 'Warning',
+    confirm: 'Confirm'
 }
 
 export default en

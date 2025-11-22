@@ -10,6 +10,15 @@
       <Icon class="icon" v-if="emailStore.contentData.showReply" v-perm="'email:send'"  @click="openReply" icon="la:reply" width="20" height="20" />
     </div>
     <div></div>
+    
+    <!-- AI翻译组件 -->
+    <ai-translate
+      :text="email.text || ''"
+      :default-target-lang="settingStore.lang === 'zh' ? 'en' : 'zh'"
+      @translate="onContentTranslate"
+      @translated="onContentTranslated"
+    />
+    
     <el-scrollbar class="scrollbar">
       <div class="container">
         <div class="email-title">
@@ -74,6 +83,7 @@
 </template>
 <script setup>
 import ShadowHtml from '@/components/shadow-html/index.vue'
+import aiTranslate from '@/components/ai-translate/index.vue'
 import {reactive, ref, watch} from "vue";
 import {useRouter} from 'vue-router'
 import {ElMessage, ElMessageBox} from 'element-plus'
@@ -159,6 +169,17 @@ function changeStar() {
       console.error(e)
       email.isStar = 0;
     })
+  }
+  
+  function onContentTranslate() {
+    // 邮件内容翻译开始
+  }
+  
+  function onContentTranslated(result) {
+    // 邮件内容翻译完成
+    if (result.translatedText) {
+      ElMessage.success(t('translateSuccess'));
+    }
   }
 }
 

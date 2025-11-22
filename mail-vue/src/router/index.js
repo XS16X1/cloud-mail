@@ -51,6 +51,16 @@ const routes = [
                     menu: true
                 }
             },
+            {
+                path: '/ai-translate-history',
+                name: 'ai-translate-history',
+                component: () => import('@/views/ai-translate-history/index.vue'),
+                meta: {
+                    title: 'AI翻译历史',
+                    name: 'ai-translate-history',
+                    menu: true
+                }
+            },
         ]
 
     },
